@@ -1,0 +1,22 @@
+{
+  "name": "@th3rdwave/react-navigation-bottom-sheet-example",
+  "displayName": "ReactNavigationBottomSheet Example",
+  "expo": {
+    "name": "@th3rdwave/react-navigation-bottom-sheet-example",
+    "slug": "th3rdwave-react-navigation-bottom-sheet-example",
+    "description": "Example app for @th3rdwave/react-navigation-bottom-sheet",
+    "privacy": "public",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
