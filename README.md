@@ -1,6 +1,8 @@
 # @th3rdwave/react-navigation-bottom-sheet
 
-Bottom sheet component for React Navigation
+Bottom sheet navigator for React Navigation.
+
+Integrates [@gorhom/bottom-sheet](https://github.com/gorhom/react-native-bottom-sheet) with [React Navigation](https://github.com/react-navigation/react-navigation).
 
 ## Installation
 
