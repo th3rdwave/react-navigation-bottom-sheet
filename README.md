@@ -23,6 +23,7 @@ const BottomSheet = createBottomSheetNavigator();
   // Default options
   screenOptions={{ snapPoints: ["60%", "90%"] }}
 >
+  {/* The first screen should be your app content */}
   <BottomSheet.Screen name="app" component={MyApp} />
   <BottomSheet.Screen name="firstSheet" component={FirstSheetComponent} />
   <BottomSheet.Screen
