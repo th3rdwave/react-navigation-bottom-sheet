@@ -10,13 +10,7 @@
   "files": [
     "src",
     "lib",
-    "android",
-    "ios",
-    "cpp",
-    "th3rdwave-react-navigation-bottom-sheet.podspec",
     "!lib/typescript/example",
-    "!android/build",
-    "!ios/build",
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__"
@@ -33,8 +27,8 @@
   },
   "keywords": [
     "react-native",
-    "ios",
-    "android"
+    "react-navigation",
+    "bottom-sheet"
   ],
   "repository": "https://github.com/th3rdwave/react-navigation-bottom-sheet",
   "author": "Janic Duplessis <janicduplessis@gmail.com> (https://github.com/janicduplessis)",
@@ -47,29 +41,33 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^11.0.0",
-    "@react-native-community/eslint-config": "^2.0.0",
-    "@release-it/conventional-changelog": "^2.0.0",
-    "@types/jest": "^26.0.0",
-    "@types/react": "^16.9.19",
-    "@types/react-native": "0.62.13",
-    "commitlint": "^11.0.0",
+    "@commitlint/config-conventional": "^17.0.2",
+    "@gorhom/bottom-sheet": "^4.3.1",
+    "@react-native-community/eslint-config": "^3.0.2",
+    "@react-navigation/native": "^6.0.10",
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@types/jest": "^28.1.1",
+    "@types/react": "~17.0.21",
+    "@types/react-native": "0.67.8",
+    "commitlint": "^17.0.2",
     "eslint": "^7.2.0",
-    "eslint-config-prettier": "^7.0.0",
-    "eslint-plugin-prettier": "^3.1.3",
-    "husky": "^6.0.0",
-    "jest": "^26.0.1",
-    "pod-install": "^0.1.0",
-    "prettier": "^2.0.5",
-    "react": "16.13.1",
-    "react-native": "0.63.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^8.0.1",
+    "jest": "^28.1.1",
+    "pod-install": "^0.1.36",
+    "prettier": "^2.6.2",
+    "react": "17.0.2",
+    "react-native": "0.68.2",
     "react-native-builder-bob": "^0.18.2",
-    "release-it": "^14.2.2",
-    "typescript": "^4.1.3"
+    "release-it": "^15.0.0",
+    "typescript": "^4.7.3"
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "@react-navigation/native": "*",
+    "@gorhom/bottom-sheet": "*"
   },
   "jest": {
     "preset": "react-native",
@@ -113,7 +111,7 @@
           "quoteProps": "consistent",
           "singleQuote": true,
           "tabWidth": 2,
-          "trailingComma": "es5",
+          "trailingComma": "all",
           "useTabs": false
         }
       ]
@@ -127,7 +125,7 @@
     "quoteProps": "consistent",
     "singleQuote": true,
     "tabWidth": 2,
-    "trailingComma": "es5",
+    "trailingComma": "all",
     "useTabs": false
   },
   "react-native-builder-bob": {

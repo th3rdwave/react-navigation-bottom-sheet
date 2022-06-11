@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@th3rdwave/react-navigation-bottom-sheet": ["../"],
+      "react": ["./node_modules/@types/react"],
+    }
+  },
+  "extends": "expo/tsconfig.base"
+}
