@@ -43,7 +43,35 @@ navigation.navigate("firstSheet", { id: 1 });
 
 ```
 
+## API
+
+### Navigation options
+
+#### `snapPoints` **Required**
+
+```ts
+Array<string | number>
+```
+
+Points for the bottom sheet to snap to, points should be sorted from bottom to top. It accepts array of number and string.
+
+#### Other options
+
+Most props from bottom sheet are exposed as navigation options. See the [@gorhom/bottom-sheet website](https://gorhom.github.io/react-native-bottom-sheet/props) for full documentation.
+
 See the [example app](./example/src/SimpleExample.tsx) for full usage details.
+
+### Navigation helpers
+
+Navigation helpers are available on the `navigation` object.
+
+#### `snapTo`
+
+```ts
+(index: number) => void
+```
+
+Snaps the current sheet to `index`.
 
 ## Contributing
 
