@@ -8,7 +8,7 @@ Bottom sheet component for React Navigation
 yarn install @th3rdwave/react-navigation-bottom-sheet @react-navigation/native @gorhom/bottom-sheet
 ```
 
-If you don't have those already, you will also need to install the [@gorhom/bottom-sheet dependencies react-native-reanimated and react-native-gesture-handler](https://gorhom.github.io/react-native-bottom-sheet/#dependencies).
+If you don't have those already, you will also need to install the [@gorhom/bottom-sheet dependencies](https://gorhom.github.io/react-native-bottom-sheet/#dependencies) react-native-reanimated and react-native-gesture-handler.
 
 ## Usage
 
