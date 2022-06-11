@@ -43,6 +43,8 @@ navigation.navigate("firstSheet", { id: 1 });
 
 ```
 
+See the [example app](./example/src/SimpleExample.tsx) for full usage details.
+
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
