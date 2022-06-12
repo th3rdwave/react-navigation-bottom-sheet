@@ -7,7 +7,7 @@ Integrates [@gorhom/bottom-sheet](https://github.com/gorhom/react-native-bottom-
 ## Installation
 
 ```sh
-yarn install @th3rdwave/react-navigation-bottom-sheet @react-navigation/native @gorhom/bottom-sheet
+yarn add @th3rdwave/react-navigation-bottom-sheet @react-navigation/native @gorhom/bottom-sheet
 ```
 
 If you don't have those already, you will also need to install the [@gorhom/bottom-sheet dependencies](https://gorhom.github.io/react-native-bottom-sheet/#dependencies) react-native-reanimated and react-native-gesture-handler.
