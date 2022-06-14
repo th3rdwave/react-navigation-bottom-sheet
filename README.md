@@ -51,12 +51,13 @@ See the [example app](./example/src/SimpleExample.tsx) for full usage details.
 
 #### `snapPoints`
 
-**Required**
 ```ts
 Array<string | number>
 ```
 
 Points for the bottom sheet to snap to, points should be sorted from bottom to top. It accepts array of number and string.
+
+Defaults to `['66%']`.
 
 #### Other options
 
