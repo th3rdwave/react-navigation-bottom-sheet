@@ -88,7 +88,7 @@ export type BottomSheetNavigationOptions = Omit<
    * snapPoints={['%100']}
    * @type Array<string | number>
    */
-  snapPoints: Array<string | number>;
+  snapPoints?: Array<string | number>;
 };
 
 export type BottomSheetNavigatorProps = DefaultNavigatorOptions<

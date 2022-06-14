@@ -72,6 +72,8 @@ function BottomSheetModalScreen({
   );
 }
 
+const DEFAULT_SNAP_POINTS = ['66%'];
+
 type Props = BottomSheetNavigationConfig & {
   state: BottomSheetNavigationState<ParamListBase>;
   navigation: BottomSheetNavigationHelpers;
@@ -107,7 +109,7 @@ export function BottomSheetView({ state, descriptors }: Props) {
           index,
           backgroundStyle,
           handleIndicatorStyle,
-          snapPoints,
+          snapPoints = DEFAULT_SNAP_POINTS,
           ...sheetProps
         } = options;
 
