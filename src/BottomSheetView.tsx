@@ -95,46 +95,52 @@ export function BottomSheetView({ state, descriptors }: Props) {
     [colors.border],
   );
 
+  // Avoid rendering provider if we only have one screen.
+  const shouldRenderProvider = React.useRef(false);
+  shouldRenderProvider.current =
+    shouldRenderProvider.current || state.routes.length > 1;
+
+  const firstScreen = descriptors[state.routes[0].key];
   return (
-    <BottomSheetModalProvider>
-      {state.routes.map((route, i) => {
-        const { options, navigation, render } = descriptors[route.key];
+    <>
+      {firstScreen.render()}
+      {shouldRenderProvider.current && (
+        <BottomSheetModalProvider>
+          {state.routes.slice(1).map((route) => {
+            const { options, navigation, render } = descriptors[route.key];
 
-        // Top route is the content the bottom sheet is going to be rendered over.
-        if (i === 0) {
-          return render();
-        }
-
-        const {
-          index,
-          backgroundStyle,
-          handleIndicatorStyle,
-          snapPoints = DEFAULT_SNAP_POINTS,
-          ...sheetProps
-        } = options;
-
-        return (
-          <BottomSheetModalScreen
-            key={route.key}
-            // Make sure index is in range, it could be out if snapToIndex is persisted
-            // and snapPoints is changed.
-            index={Math.min(
-              route.snapToIndex ?? index ?? 0,
-              snapPoints.length - 1,
-            )}
-            snapPoints={snapPoints}
-            navigation={navigation}
-            backgroundStyle={[themeBackgroundStyle, backgroundStyle]}
-            handleIndicatorStyle={[
-              themeHandleIndicatorStyle,
+            const {
+              index,
+              backgroundStyle,
               handleIndicatorStyle,
-            ]}
-            {...sheetProps}
-          >
-            {render()}
-          </BottomSheetModalScreen>
-        );
-      })}
-    </BottomSheetModalProvider>
+              snapPoints = DEFAULT_SNAP_POINTS,
+              ...sheetProps
+            } = options;
+
+            return (
+              <BottomSheetModalScreen
+                key={route.key}
+                // Make sure index is in range, it could be out if snapToIndex is persisted
+                // and snapPoints is changed.
+                index={Math.min(
+                  route.snapToIndex ?? index ?? 0,
+                  snapPoints.length - 1,
+                )}
+                snapPoints={snapPoints}
+                navigation={navigation}
+                backgroundStyle={[themeBackgroundStyle, backgroundStyle]}
+                handleIndicatorStyle={[
+                  themeHandleIndicatorStyle,
+                  handleIndicatorStyle,
+                ]}
+                {...sheetProps}
+              >
+                {render()}
+              </BottomSheetModalScreen>
+            );
+          })}
+        </BottomSheetModalProvider>
+      )}
+    </>
   );
 }
