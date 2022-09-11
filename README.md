@@ -31,7 +31,7 @@ const BottomSheet = createBottomSheetNavigator();
   <BottomSheet.Screen
     name="secondSheet"
     component={SecondSheetComponent}
-    // Can pass any prop from @gorhom/bottom-sheet
+    // Can pass any prop from @gorhom/bottom-sheet's BottomSheetModal
     options={{ snapPoints: [200, "100%"], index: 1 }}
   />
 </BottomSheet.Navigator>;
@@ -61,7 +61,7 @@ Defaults to `['66%']`.
 
 #### Other options
 
-Most props from bottom sheet are exposed as navigation options. See the [@gorhom/bottom-sheet website](https://gorhom.github.io/react-native-bottom-sheet/props) for full documentation.
+Most props from `BottomSheetModal` are exposed as navigation options. See the [@gorhom/bottom-sheet website](https://gorhom.github.io/react-native-bottom-sheet/modal/props) for full documentation.
 
 ### Navigation helpers
 
