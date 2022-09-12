@@ -1,4 +1,4 @@
-import type { BottomSheetProps } from '@gorhom/bottom-sheet';
+import type { BottomSheetModalProps } from '@gorhom/bottom-sheet';
 import type {
   DefaultNavigatorOptions,
   Descriptor,
@@ -64,7 +64,7 @@ export type BottomSheetNavigationHelpers = NavigationHelpers<
 export type BottomSheetNavigationConfig = {};
 
 export type BottomSheetNavigationOptions = Omit<
-  BottomSheetProps,
+  BottomSheetModalProps,
   // Remove some props that aren't useful as navigation options.
   | 'containerHeight'
   | 'snapPoints'
