@@ -2,6 +2,8 @@ import {
   BottomSheetModal,
   BottomSheetModalProps,
   BottomSheetModalProvider,
+  BottomSheetView as RNBottomSheetView,
+  useBottomSheetDynamicSnapPoints,
 } from '@gorhom/bottom-sheet';
 import { ParamListBase, useTheme } from '@react-navigation/native';
 import * as React from 'react';
@@ -18,8 +20,11 @@ type BottomSheetModalScreenProps = BottomSheetModalProps & {
 };
 
 function BottomSheetModalScreen({
-  navigation,
+  contentHeight,
+  handleHeight,
   index,
+  navigation,
+  snapPoints,
   ...props
 }: BottomSheetModalScreenProps) {
   const ref = React.useRef<BottomSheetModal>(null);
@@ -64,7 +69,10 @@ function BottomSheetModalScreen({
   return (
     <BottomSheetModal
       ref={ref}
+      contentHeight={contentHeight}
+      handleHeight={handleHeight}
       index={index}
+      snapPoints={snapPoints}
       onChange={onChange}
       onDismiss={onDismiss}
       {...props}
@@ -72,13 +80,13 @@ function BottomSheetModalScreen({
   );
 }
 
-const DEFAULT_SNAP_POINTS = ['66%'];
-
 type Props = BottomSheetNavigationConfig & {
   state: BottomSheetNavigationState<ParamListBase>;
   navigation: BottomSheetNavigationHelpers;
   descriptors: BottomSheetDescriptorMap;
 };
+
+const initialDynamicSnapPoints = ['CONTENT_HEIGHT', 'CONTENT_HEIGHT'];
 
 export function BottomSheetView({ state, descriptors }: Props) {
   const { colors } = useTheme();
@@ -101,6 +109,14 @@ export function BottomSheetView({ state, descriptors }: Props) {
     shouldRenderProvider.current || state.routes.length > 1;
 
   const firstScreen = descriptors[state.routes[0].key];
+
+  const {
+    animatedHandleHeight,
+    animatedSnapPoints,
+    animatedContentHeight,
+    handleContentLayout,
+  } = useBottomSheetDynamicSnapPoints(initialDynamicSnapPoints);
+
   return (
     <>
       {firstScreen.render()}
@@ -113,7 +129,7 @@ export function BottomSheetView({ state, descriptors }: Props) {
               index,
               backgroundStyle,
               handleIndicatorStyle,
-              snapPoints = DEFAULT_SNAP_POINTS,
+              snapPoints = animatedSnapPoints.value,
               ...sheetProps
             } = options;
 
@@ -126,6 +142,8 @@ export function BottomSheetView({ state, descriptors }: Props) {
                   route.snapToIndex ?? index ?? 0,
                   snapPoints.length - 1,
                 )}
+                contentHeight={animatedContentHeight}
+                handleHeight={animatedHandleHeight}
                 snapPoints={snapPoints}
                 navigation={navigation}
                 backgroundStyle={[themeBackgroundStyle, backgroundStyle]}
@@ -135,7 +153,9 @@ export function BottomSheetView({ state, descriptors }: Props) {
                 ]}
                 {...sheetProps}
               >
-                {render()}
+                <RNBottomSheetView onLayout={handleContentLayout}>
+                  {render()}
+                </RNBottomSheetView>
               </BottomSheetModalScreen>
             );
           })}
