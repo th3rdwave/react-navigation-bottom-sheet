@@ -14,13 +14,13 @@
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.3.1",
     "@react-navigation/native": "^6.0.10",
-    "expo": "^45.0.5",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-native": "0.68.2",
-    "react-native-gesture-handler": "~2.2.1",
-    "react-native-reanimated": "~2.8.0",
-    "react-native-web": "0.17.7"
+    "expo": "^46.0.9",
+    "react": "18.0.0",
+    "react-dom": "18.0.0",
+    "react-native": "0.69.6",
+    "react-native-gesture-handler": "2.5.0",
+    "react-native-reanimated": "2.9.1",
+    "react-native-web": "0.18.7"
   },
   "devDependencies": {
     "@babel/core": "~7.18.2",
