@@ -7,7 +7,6 @@ import {
 } from '@gorhom/bottom-sheet';
 import { ParamListBase, useTheme } from '@react-navigation/native';
 import * as React from 'react';
-import { FullWindowOverlay } from 'react-native-screens';
 import type {
   BottomSheetDescriptorMap,
   BottomSheetNavigationConfig,
@@ -122,47 +121,45 @@ export function BottomSheetView({ state, descriptors }: Props) {
     <>
       {firstScreen.render()}
       {shouldRenderProvider.current && (
-        <FullWindowOverlay>
-          <BottomSheetModalProvider>
-            {state.routes.slice(1).map((route) => {
-              const { options, navigation, render } = descriptors[route.key];
+        <BottomSheetModalProvider>
+          {state.routes.slice(1).map((route) => {
+            const { options, navigation, render } = descriptors[route.key];
 
-              const {
-                index,
-                backgroundStyle,
-                handleIndicatorStyle,
-                snapPoints = animatedSnapPoints.value,
-                ...sheetProps
-              } = options;
+            const {
+              index,
+              backgroundStyle,
+              handleIndicatorStyle,
+              snapPoints = animatedSnapPoints.value,
+              ...sheetProps
+            } = options;
 
-              return (
-                <BottomSheetModalScreen
-                  key={route.key}
-                  // Make sure index is in range, it could be out if snapToIndex is persisted
-                  // and snapPoints is changed.
-                  index={Math.min(
-                    route.snapToIndex ?? index ?? 0,
-                    snapPoints.length - 1,
-                  )}
-                  contentHeight={animatedContentHeight}
-                  handleHeight={animatedHandleHeight}
-                  snapPoints={snapPoints}
-                  navigation={navigation}
-                  backgroundStyle={[themeBackgroundStyle, backgroundStyle]}
-                  handleIndicatorStyle={[
-                    themeHandleIndicatorStyle,
-                    handleIndicatorStyle,
-                  ]}
-                  {...sheetProps}
-                >
-                  <RNBottomSheetView onLayout={handleContentLayout}>
-                    {render()}
-                  </RNBottomSheetView>
-                </BottomSheetModalScreen>
-              );
-            })}
-          </BottomSheetModalProvider>
-        </FullWindowOverlay>
+            return (
+              <BottomSheetModalScreen
+                key={route.key}
+                // Make sure index is in range, it could be out if snapToIndex is persisted
+                // and snapPoints is changed.
+                index={Math.min(
+                  route.snapToIndex ?? index ?? 0,
+                  snapPoints.length - 1,
+                )}
+                contentHeight={animatedContentHeight}
+                handleHeight={animatedHandleHeight}
+                snapPoints={snapPoints}
+                navigation={navigation}
+                backgroundStyle={[themeBackgroundStyle, backgroundStyle]}
+                handleIndicatorStyle={[
+                  themeHandleIndicatorStyle,
+                  handleIndicatorStyle,
+                ]}
+                {...sheetProps}
+              >
+                <RNBottomSheetView onLayout={handleContentLayout}>
+                  {render()}
+                </RNBottomSheetView>
+              </BottomSheetModalScreen>
+            );
+          })}
+        </BottomSheetModalProvider>
       )}
     </>
   );
