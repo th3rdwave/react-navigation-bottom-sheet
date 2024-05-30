@@ -3,9 +3,10 @@ import {
   BottomSheetModalProps,
   BottomSheetModalProvider,
   BottomSheetView as RNBottomSheetView,
-  useBottomSheetDynamicSnapPoints,
 } from '@gorhom/bottom-sheet';
 import { ParamListBase, useTheme } from '@react-navigation/native';
+import { FullWindowOverlay } from 'react-native-screens';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as React from 'react';
 import type {
   BottomSheetDescriptorMap,
@@ -15,32 +16,6 @@ import type {
   BottomSheetNavigationState,
 } from './types';
 
-const DynamicContentHeightBottomSheet = React.forwardRef<
-  BottomSheetModal,
-  BottomSheetModalProps
->(({ snapPoints, children, ...props }, ref) => {
-  const {
-    animatedHandleHeight,
-    animatedSnapPoints,
-    animatedContentHeight,
-    handleContentLayout,
-  } = useBottomSheetDynamicSnapPoints(snapPoints);
-
-  return (
-    <BottomSheetModal
-      ref={ref}
-      contentHeight={animatedContentHeight}
-      handleHeight={animatedHandleHeight}
-      snapPoints={animatedSnapPoints}
-      {...props}
-    >
-      <RNBottomSheetView onLayout={handleContentLayout}>
-        {children}
-      </RNBottomSheetView>
-    </BottomSheetModal>
-  );
-});
-
 type BottomSheetModalScreenProps = BottomSheetModalProps & {
   navigation: BottomSheetNavigationProp<ParamListBase>;
 };
@@ -48,7 +23,8 @@ type BottomSheetModalScreenProps = BottomSheetModalProps & {
 function BottomSheetModalScreen({
   index,
   navigation,
-  snapPoints,
+  enableDynamicSizing,
+  children,
   ...props
 }: BottomSheetModalScreenProps) {
   const ref = React.useRef<BottomSheetModal>(null);
@@ -90,19 +66,21 @@ function BottomSheetModalScreen({
     }
   }, [navigation]);
 
-  const BottomSheetComponent = snapPoints.includes('CONTENT_HEIGHT')
-    ? DynamicContentHeightBottomSheet
-    : BottomSheetModal;
-
   return (
-    <BottomSheetComponent
+    <BottomSheetModal
       ref={ref}
       index={index}
-      snapPoints={snapPoints}
+      enableDynamicSizing={enableDynamicSizing}
       onChange={onChange}
       onDismiss={onDismiss}
       {...props}
-    />
+    >
+      {enableDynamicSizing ? (
+        <RNBottomSheetView>{children as React.ReactNode}</RNBottomSheetView>
+      ) : (
+        children
+      )}
+    </BottomSheetModal>
   );
 }
 
@@ -139,43 +117,53 @@ export function BottomSheetView({ state, descriptors }: Props) {
   return (
     <>
       {firstScreen.render()}
-      {shouldRenderProvider.current && (
-        <BottomSheetModalProvider>
-          {state.routes.slice(1).map((route) => {
-            const { options, navigation, render } = descriptors[route.key];
+      <FullWindowOverlay>
+        <SafeAreaProvider style={{ flex: 1, pointerEvents: 'box-none' }}>
+          {shouldRenderProvider.current && (
+            <BottomSheetModalProvider>
+              {state.routes.slice(1).map((route) => {
+                const { options, navigation, render } = descriptors[route.key];
 
-            const {
-              index,
-              backgroundStyle,
-              handleIndicatorStyle,
-              snapPoints = DEFAULT_SNAP_POINTS,
-              ...sheetProps
-            } = options;
-
-            return (
-              <BottomSheetModalScreen
-                key={route.key}
-                // Make sure index is in range, it could be out if snapToIndex is persisted
-                // and snapPoints is changed.
-                index={Math.min(
-                  route.snapToIndex ?? index ?? 0,
-                  snapPoints.length - 1,
-                )}
-                snapPoints={snapPoints}
-                navigation={navigation}
-                backgroundStyle={[themeBackgroundStyle, backgroundStyle]}
-                handleIndicatorStyle={[
-                  themeHandleIndicatorStyle,
+                const {
+                  index,
+                  backgroundStyle,
                   handleIndicatorStyle,
-                ]}
-                {...sheetProps}
-              >
-                {render()}
-              </BottomSheetModalScreen>
-            );
-          })}
-        </BottomSheetModalProvider>
-      )}
+                  snapPoints,
+                  enableDynamicSizing,
+                  ...sheetProps
+                } = options;
+
+                return (
+                  <BottomSheetModalScreen
+                    key={route.key}
+                    // Make sure index is in range, it could be out if snapToIndex is persisted
+                    // and snapPoints is changed.
+                    index={Math.min(
+                      route.snapToIndex ?? index ?? 0,
+                      snapPoints != null ? snapPoints.length - 1 : 0,
+                    )}
+                    snapPoints={
+                      snapPoints == null && !enableDynamicSizing
+                        ? DEFAULT_SNAP_POINTS
+                        : snapPoints
+                    }
+                    enableDynamicSizing={enableDynamicSizing}
+                    navigation={navigation}
+                    backgroundStyle={[themeBackgroundStyle, backgroundStyle]}
+                    handleIndicatorStyle={[
+                      themeHandleIndicatorStyle,
+                      handleIndicatorStyle,
+                    ]}
+                    {...sheetProps}
+                  >
+                    {render()}
+                  </BottomSheetModalScreen>
+                );
+              })}
+            </BottomSheetModalProvider>
+          )}
+        </SafeAreaProvider>
+      </FullWindowOverlay>
     </>
   );
 }
