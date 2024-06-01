@@ -31,11 +31,7 @@ function Overlay({ children }: { children: React.ReactNode }) {
       </FullWindowOverlay>
     );
   } else {
-    return (
-      <SafeAreaProvider style={styles.safeAreaProvider}>
-        {children}
-      </SafeAreaProvider>
-    );
+    return children;
   }
 }
 
